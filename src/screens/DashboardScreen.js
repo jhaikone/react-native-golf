@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 
-class CourseSelectionPage extends Component {
+class DashboardScreen extends Component {
 
     static navigationOptions = {
         title: 'Valitse pelattava kenttä',
@@ -10,11 +10,11 @@ class CourseSelectionPage extends Component {
     render() {
         return (
             <View>
-                <Text>Choose your course</Text>
+                <UserImageContainer />
             </View>
-        );
+        );  
     }
 }
 
 
-export default CourseSelectionPage;
+export default DashboardScreen;
