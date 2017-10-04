@@ -10,7 +10,8 @@ import { StackNavigator } from 'react-navigation';
 import { StyleSheet, View, Button, Image } from 'react-native';
 
 import screens from './src/screen-names';
-import CourseSelectionScreen from "./src/screens/CourseSelectionScreen";
+import CourseSelectionScreen from "./src/screens/course-selection-screen/CourseSelectionScreen";
+import DashboardScreen from "./src/screens/dashboard-screen/DashboardScreen";
 
 import testImage from "./assets/img/dashboard/test.jpg";
 
@@ -23,7 +24,6 @@ const cacheImages = images => {
     return Expo.Asset.fromModule(image).downloadAsync();
   });
 }
-
 
 class App extends Component {
 
@@ -38,7 +38,6 @@ class App extends Component {
       appIsReady: false
     }
   }
-  
 
   componentWillMount () {
     this._loadAssetAsync();
@@ -55,21 +54,35 @@ class App extends Component {
     return (
       <Provider store={store}>
         <View >
-          <Button onPress={() => navigate(screens.COURSE_SELECTION_SCREEN)} title="Aloita"> </Button>
+          <Button onPress={() => navigate(screens.DASHBOARD_SCREEN)} title="Aloita"> </Button>
+          <Button onPress={() => navigate(screens.COURSE_SELECTION_SCREEN)} title="kentät"> </Button>
         </View>
       </Provider>
     );
   }
 }
 
+
 export default GolfApp = StackNavigator({
   Home: {
-    screen: App
+    screen: DashboardScreen
   },
   CourseSelectionScreen: {
     screen: CourseSelectionScreen
+  },
+  DashboardScreen: {
+    screen: DashboardScreen,
+    navigationOptions: {
+      header: {
+        titleStyle: {
+            textAlign:'center',
+            color: "#94BB69"
+        }
+      }
+    }
   }
-})
+});
+
 
 const styles = StyleSheet.create({
   container: {

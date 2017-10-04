@@ -5,8 +5,7 @@
     "androidStatusBar": {
     "padding-top": "100px",
     "barStyle": "light-content",
-    "backgroundColor": "#334393"
+    "backgroundColor": "#000"
     }
   }
-  
 }
