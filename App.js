@@ -12,6 +12,7 @@ import { StyleSheet, View, Button, Image } from 'react-native';
 import screens from './src/screen-names';
 import CourseSelectionScreen from "./src/screens/course-selection-screen/CourseSelectionScreen";
 import DashboardScreen from "./src/screens/dashboard-screen/DashboardScreen";
+import CourseScreen from "./src/screens/course-screen/CourseScreen";
 
 import testImage from "./assets/img/dashboard/test.jpg";
 
@@ -69,6 +70,9 @@ export default GolfApp = StackNavigator({
   },
   CourseSelectionScreen: {
     screen: CourseSelectionScreen
+  },
+  CourseScreen: {
+    screen: CourseScreen
   },
   DashboardScreen: {
     screen: DashboardScreen,

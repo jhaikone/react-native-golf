@@ -24,7 +24,7 @@ class CourseSelectionScreen extends Component {
     render() {
         return (
             <Provider store={store}>
-                <CourseSelectionContainer />
+                <CourseSelectionContainer navigation={this.props.navigation}/>
             </Provider>
         );  
     }
