@@ -7,7 +7,7 @@ import store from './src/store';
 
 import { StackNavigator } from 'react-navigation';
 
-import { StyleSheet, View, Button, Image } from 'react-native';
+import { StyleSheet, View, Button, Image, AsyncStorage } from 'react-native';
 
 import screens from './src/screen-names';
 import CourseSelectionScreen from "./src/screens/course-selection-screen/CourseSelectionScreen";
@@ -15,6 +15,8 @@ import DashboardScreen from "./src/screens/dashboard-screen/DashboardScreen";
 import CourseScreen from "./src/screens/course-screen/CourseScreen";
 
 import testImage from "./assets/img/dashboard/test.jpg";
+
+import MOCK_COURSES from "./mocks/courses.json"; 
 
 
 const cacheImages = images => {
@@ -27,42 +29,42 @@ const cacheImages = images => {
 }
 
 class App extends Component {
-
-  static navigationOptions = {
-    title: 'Welcome',
-  };
-
-  constructor () {
-    super();  
-    
-    this.state = {
-      appIsReady: false
+  
+    static navigationOptions = {
+      title: 'Welcome',
+    };
+  
+    constructor () {
+      super();  
+      console.log('app');
+      this.state = {
+        appIsReady: false
+      }
+    }
+  
+    componentWillMount () {
+      this._loadAssetAsync();
+    }
+  
+    async _loadAssetAsync () {
+      const imageAssets = cacheImages([testImage]);
+      await Promise.all(...imageAssets);
+      this.setState({appIsReady: true});
+    }
+  
+    render() {
+      const { navigate } = this.props.navigation;
+      return (
+        <Provider store={store}>
+          <View >
+            <Button onPress={() => navigate(screens.DASHBOARD_SCREEN)} title="Aloita"> </Button>
+            <Button onPress={() => navigate(screens.COURSE_SELECTION_SCREEN)} title="kentät"> </Button>
+          </View>
+        </Provider>
+      );
     }
   }
-
-  componentWillMount () {
-    this._loadAssetAsync();
-  }
-
-  async _loadAssetAsync () {
-    const imageAssets = cacheImages([testImage]);
-    await Promise.all(...imageAssets);
-    this.setState({appIsReady: true});
-  }
-
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <Provider store={store}>
-        <View >
-          <Button onPress={() => navigate(screens.DASHBOARD_SCREEN)} title="Aloita"> </Button>
-          <Button onPress={() => navigate(screens.COURSE_SELECTION_SCREEN)} title="kentät"> </Button>
-        </View>
-      </Provider>
-    );
-  }
-}
-
+  
 
 export default GolfApp = StackNavigator({
   Home: {

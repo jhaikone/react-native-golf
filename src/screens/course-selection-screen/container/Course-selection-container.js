@@ -5,26 +5,30 @@ import { List, ListItem, Divider, SearchBar, Icon } from 'react-native-elements'
 
 import { connect } from "react-redux";
 
+import { actions as courseSelectionActions } from '../reducers/courses_reducer';
+
 import screenNames from '../../../screen-names';
 
 class CourseSelectionContainer extends Component {
 
   constructor (props) {
     super(props);
-    const favorites = this.props.courses.filter((course) => course.isFavorite);
-    const regulars = this.props.courses.filter((course) => !course.isFavorite);
     this.state = {
-      filteredCourses: favorites.concat(regulars)
+      filteredCourses: this.props.filterCourses
     }
   }
 
+  componentDidMount () {
+    this.props.onFetch();
+  }
+
   filterList = (value) => {
-    const filteredCourses = this.props.courses.filter((course) => course.name.toLowerCase().indexOf(value) > -1) || [];
-    this.setState({filteredCourses})
+    this.props.onFilterCourses(value);
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, filteredCourses } = this.props;
+    console.log('props', this.props);
     return (
       <View>
         <SearchBar
@@ -33,7 +37,7 @@ class CourseSelectionContainer extends Component {
         />
         <List marginTop={0}>
           <FlatList
-            data={this.state.filteredCourses}
+            data={filteredCourses}
             renderItem={({ item }) => {
               return (
                 <ListItem
@@ -41,6 +45,7 @@ class CourseSelectionContainer extends Component {
                   onPress={() => {
                     console.log('this item ->', item)
                     console.log('this ->', navigation)
+
                     navigation.navigate(screenNames.COURSE_SCREEN);
                   }}
                   leftIcon={
@@ -51,14 +56,7 @@ class CourseSelectionContainer extends Component {
                         size={16}
                         raised={true}
                         onPress={ () => {
-                          const filteredCourses = this.state.filteredCourses.map((course) => {
-                           
-                            if (course.id === item.id) {
-                              course.isFavorite = !course.isFavorite;
-                            }
-                            return course;
-                          });
-                          this.setState({filteredCourses})
+                          this.props.onToggleFavorite(item)
                         }}
                       />
                     )
@@ -75,9 +73,23 @@ class CourseSelectionContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    courses: state.courses
+    ...state.courses
   };
 };
 
-export default connect(mapStateToProps)(CourseSelectionContainer)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetch: () => {
+      dispatch(courseSelectionActions.fetch())
+    },
+    onFilterCourses: (value) => {
+      dispatch(courseSelectionActions.filterCourses(value))
+    },
+    onToggleFavorite: (item) => {
+      dispatch(courseSelectionActions.toggleFavorite(item))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CourseSelectionContainer)
 
