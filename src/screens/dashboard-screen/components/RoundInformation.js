@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { View, Text, StyleSheet } from "react-native";
-import { Grid, Col } from "react-native-elements";
 
 import variables from "../../../styles/variables";
 
@@ -67,6 +66,7 @@ const styles = StyleSheet.create({
     divider: {
         borderRightColor: variables.border,
         borderRightWidth: 1,
+        zIndex: -1
     }
 });
 

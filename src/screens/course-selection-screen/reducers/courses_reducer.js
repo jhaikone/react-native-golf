@@ -11,10 +11,8 @@ function initCourses () {
 }
 
 function courses(state = [], action) {
-  console.log('ACTION IS HAPPENING', action)
   switch (action.type) {
     case types.GET_COURSES_RECEIVE: {
-      console.log('action type', action);
       return Object.assign([], state, action.courses);
     } default: {
       return state;
@@ -81,8 +79,6 @@ export const actions = {
   },
   filterCourses: (value) => {
     return (dispatch, getState) => {
-      console.log('getState', getState());
-      console.log('value', value);
       const state = getState();
       return dispatch({
         type: types.FILTER_COURSES,
@@ -101,13 +97,18 @@ export const actions = {
          }
          return course;
        });
-      const result = dispatch({
+      dispatch({
         type: types.FILTER_COURSES,
         filterBy: "",
         originalCourses: toggledList
-      })
-      console.log('result', result);
-      AsyncStorage.setItem("COURSES", JSON.stringify(result.originalCourses));
+      });
+      dispatch(actions.saveCourses())
+    }
+  },
+  saveCourses: () => {
+    return (dispatch, getState) => {
+      const state = getState();
+      AsyncStorage.setItem("COURSES", JSON.stringify(state.courses.courses));
     }
   }
 }

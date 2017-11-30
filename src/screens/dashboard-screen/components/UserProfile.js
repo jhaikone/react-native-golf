@@ -5,7 +5,6 @@ import variables from "../../../styles/variables.js";
 class UserProfile extends Component {
     
     render() {
-        console.log('variables', variables)
         return (
             <View style={styles.container}>
                 <View style={styles.backgroundContainer}>
@@ -50,6 +49,7 @@ const styles = StyleSheet.create({
         height: 200,
         borderWidth: 2,
         borderColor: '#d6d7da',
+        zIndex: 1
     },
     badgetCircle: {
         position: "absolute",
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+        zIndex: 2
     },
     badgeContent: {
         color: variables.primary

@@ -41,7 +41,6 @@ class DashboardScreen extends Component {
 
     async componentWillMount () {
         await initCourses();
-        console.log('initing ---> done');
     }
 
 

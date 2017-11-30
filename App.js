@@ -36,7 +36,6 @@ class App extends Component {
   
     constructor () {
       super();  
-      console.log('app');
       this.state = {
         appIsReady: false
       }
@@ -56,7 +55,7 @@ class App extends Component {
       const { navigate } = this.props.navigation;
       return (
         <Provider store={store}>
-          <View >
+          <View style={styles.container}>
             <Button onPress={() => navigate(screens.DASHBOARD_SCREEN)} title="Aloita"> </Button>
             <Button onPress={() => navigate(screens.COURSE_SELECTION_SCREEN)} title="kentät"> </Button>
           </View>
@@ -92,9 +91,6 @@ export default GolfApp = StackNavigator({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

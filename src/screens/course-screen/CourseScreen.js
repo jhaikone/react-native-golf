@@ -11,14 +11,14 @@ import variables from "../../styles/variables.js";
 
 class CourseScreen extends Component {
 
-  static navigationOptions = {
-    headerTitle: "Kentän asetukset",
-    headerStyle: {
-        backgroundColor: `${variables.headerBackground}`,
-    },
-    headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
-    headerTintColor: `${variables.primary}`
-};
+    static navigationOptions = ({navigation}) => ({
+        headerTitle: `${navigation.state.params.name}`,
+        headerStyle: {
+            backgroundColor: `${variables.headerBackground}`,
+        },
+        headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
+        headerTintColor: `${variables.primary}`
+    });
 
 
     render() {
