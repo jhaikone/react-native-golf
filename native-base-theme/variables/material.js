@@ -2,6 +2,8 @@ import color from "color";
 
 import { Platform, Dimensions, PixelRatio } from "react-native";
 
+import variables from "../../src/styles/variables";
+
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 const platform = Platform.OS;
@@ -109,7 +111,7 @@ export default {
   cardDefaultBg: "#fff",
 
   // Color
-  brandPrimary: "#3F51B5",
+  brandPrimary: variables.primary,
   brandInfo: "#3F57D3",
   brandSuccess: "#5cb85c",
   brandDanger: "#d9534f",

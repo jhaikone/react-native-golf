@@ -1,27 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Expo from 'expo';
+import Expo from "expo";
 
-import { Provider } from 'react-redux';
-import store from './src/store';
+import { Provider } from "react-redux";
+import store from "./src/store";
 
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator } from "react-navigation";
 
-import { StyleSheet, View, Button, Image, AsyncStorage } from 'react-native';
+import { StyleSheet, Image, AsyncStorage } from "react-native";
+import { Container, Text, Button, StyleProvider } from "native-base";
 
-import screens from './src/screen-names';
+import MainContent from "./src/MainContent";
+import Footer from "./src/components/Footer";
+import Toolbar from "./src/components/Toolbar";
+
+import screens from "./src/screen-names";
 import CourseSelectionScreen from "./src/screens/course-selection-screen/CourseSelectionScreen";
 import DashboardScreen from "./src/screens/dashboard-screen/DashboardScreen";
 import CourseScreen from "./src/screens/course-screen/CourseScreen";
+import SessionScreen from "./src/screens/sessions-screen/SessionScreen";
 
 import testImage from "./assets/img/dashboard/test.jpg";
+import variables from "./src/styles/variables";
 
-import MOCK_COURSES from "./mocks/courses.json"; 
+import getTheme from "./native-base-theme/components";
+import platform from './native-base-theme/variables/platform';
+
+import MOCK_COURSES from "./mocks/courses.json";
 
 
 const cacheImages = images => {
   images.map((image) => {
-    if (typeof image === 'string') {
+    if (typeof image === "string") {
       return Image.prefetch(image);
     }
     return Expo.Asset.fromModule(image).downloadAsync();
@@ -29,45 +39,71 @@ const cacheImages = images => {
 }
 
 class App extends Component {
-  
-    static navigationOptions = {
-      title: 'Welcome',
+
+  constructor() {
+    super();
+    this.state = {
+      isReady: false
     };
-  
-    constructor () {
-      super();  
-      this.state = {
-        appIsReady: false
-      }
-    }
-  
-    componentWillMount () {
-      this._loadAssetAsync();
-    }
-  
-    async _loadAssetAsync () {
-      const imageAssets = cacheImages([testImage]);
-      await Promise.all(...imageAssets);
-      this.setState({appIsReady: true});
-    }
-  
-    render() {
-      const { navigate } = this.props.navigation;
-      return (
-        <Provider store={store}>
-          <View style={styles.container}>
-            <Button onPress={() => navigate(screens.DASHBOARD_SCREEN)} title="Aloita"> </Button>
-            <Button onPress={() => navigate(screens.COURSE_SELECTION_SCREEN)} title="kentät"> </Button>
-          </View>
-        </Provider>
-      );
-    }
   }
-  
+
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
+    });
+    console.log('setting stata');
+    this.setState({ isReady: true });
+  }
+
+  // componentWillMount() {
+  //   this._loadAssetAsync();
+  // }
+
+  // async _loadAssetAsync() {
+  //   const imageAssets = cacheImages(["./assets/img/dashboard/background1.jpg", "./assets/img/dashboard/portrait_test.jpg"]);
+  //   await Promise.all(...imageAssets);
+  //   this.setState({ appIsReady: true });
+  // }
+
+  render() {
+    console.log('rennder', this.state)
+    if (!this.state.isReady) {
+      return <Expo.AppLoading />
+    }
+    const { navigation } = this.props;
+    return (
+      <Provider store={store}>
+        <StyleProvider style={getTheme(platform)}>
+          <Container style={{ flex: 1 }}>
+
+            <MainContent navigation={navigation} style={{ backgroundColor: "green" }} />
+
+            <Footer>
+              <Toolbar>
+                <Button onPress={() => {navigation.navigate(screens.COURSE_SELECTION_SCREEN) }}><Text>Aloita kierros</Text>
+                </Button>
+              </Toolbar>
+            </Footer>
+          </Container>
+        </StyleProvider>
+      </Provider>
+    );
+  }
+}
 
 export default GolfApp = StackNavigator({
   Home: {
-    screen: DashboardScreen
+    screen: App,
+    navigationOptions: {
+      headerTitle: "Tervetuloa",
+      headerStyle: {
+        backgroundColor: `${variables.headerBackground}`,
+      },
+      headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
+      headerTintColor: `${variables.primary}`
+    }
   },
   CourseSelectionScreen: {
     screen: CourseSelectionScreen
@@ -77,20 +113,17 @@ export default GolfApp = StackNavigator({
   },
   DashboardScreen: {
     screen: DashboardScreen,
-    navigationOptions: {
-      header: {
-        titleStyle: {
-            textAlign:'center',
-            color: "#94BB69"
-        }
-      }
-    }
+  },
+  SessionScreen: {
+    screen: SessionScreen,
   }
+
 });
 
 
 const styles = StyleSheet.create({
+
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 });

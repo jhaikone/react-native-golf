@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
-import { Container, Card, CardItem, Body, Content, ListItem, Text, Radio, Right, StyleProvider } from 'native-base';
+import { Container, Content, Text, Button, StyleProvider } from 'native-base';
 
 import getTheme from '../../../../native-base-theme/components';
 import platform from '../../../../native-base-theme/variables/platform';
 
+import { actions as courseActions } from '../reducers/course-reducer';
 
 import { connect } from "react-redux";
 
 import Label from "../../../components/Label";
 import RadioSelector from "../components/RadioSelector";
+import Footer from "../../../components/Footer"
+import Toolbar from "../../../components/Toolbar"
 
 import variables from "../../../styles/variables";
+import screens from "../../../screen-names";
 import { makeDirectoryAsync } from "expo/src/FileSystem";
 
 const RoundTypes = [
@@ -57,19 +61,44 @@ class CourseContainer extends Component {
     }
   }
 
+  goToSessionScreen = () => {
+    const { onFetchHoles, navigation } = this.props;
+    const course_id = (navigation.state && navigation.state.params) ? navigation.state.params.id : null;
+    const holes = onFetchHoles(course_id);
+    navigation.navigate(screens.SESSION_SCREEN);
+  }
+
+
 
   render() {
+    console.log('container course render', this);
     return (
       <StyleProvider style={getTheme(platform)}>
+      <Container>
         <Content>
         <RadioSelector options={this.tees} onSelect={this.setTee} selectedItem={this.state.selectedTee} label="Valitse tee" />
         <RadioSelector options={RoundTypes} onSelect={this.setRoundType} selectedItem={this.state.selectedRoundType} label="Valitse kierrospituus" />
       </Content>
+      <Footer>
+            <Toolbar>
+              <Button onPress={() => this.goToSessionScreen()} >
+                <Text>Aloita kierros</Text>
+              </Button>
+            </Toolbar>
+          </Footer>
+      </Container>
       </StyleProvider>
     )
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchHoles: (id) => {
+      dispatch(courseActions.fetchHoles(id))
+    }
+  }
+}
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -95,5 +124,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps)(CourseContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(CourseContainer)
 

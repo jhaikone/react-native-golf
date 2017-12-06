@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Expo from "expo";
 import { connect } from "react-redux";
 
-import { View, ScrollView, StyleSheet } from "react-native";
-import { Container, Button, Content, List, ListItem, Text, Body, Left, Right, Icon as BaseIcon, Fab } from 'native-base';
+import { StyleSheet, View } from "react-native";
+import { Container, Content, List, ListItem, Text, Body, Right, Icon as BaseIcon } from 'native-base';
 
 
 import UserProfile from "../components/UserProfile";
@@ -18,128 +18,91 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class DashboardContainer extends Component {
 
-    constructor(props) {
-        super(props);
-        //TODO: move this out of here
-        this.state = {
-            isReady: false
-          };
-    }
+  render() {
+    console.log('rendering dashboard kissa')
 
+    const { rounds, user, navigation } = this.props;
+    const dataArray = rounds.map((round) => {
+      return { ...round, key: round.id }
+    });
+    return (
+      <Container>
+        <Container>
+          <Container style={styles.container}>
+            <UserProfile user={user} />
+          </Container>
+          <Container style={styles.informationContainer}>
+            <RoundInformation rounds={rounds} />
+          </Container>
+        </Container>
 
-    async componentWillMount() {
-        await Expo.Font.loadAsync({
-          Roboto: require("native-base/Fonts/Roboto.ttf"),
-          Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-          Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
-        });
-    
-        this.setState({ isReady: true });
-      }
-    
+        <Container>
+          <List
+            dataArray={dataArray}
+            renderRow={(item) => {
+              return (
+                <ListItem style={styles.listItem}>
+                  <Body style={styles.leftItem}>
+                    <Text>{item.name}</Text>
+                    <Text>{helper.formatDate(item.startedAt)}</Text>
+                  </Body>
 
-    render() {
-        if (!this.state.isReady) {
-            return <Expo.AppLoading/>
-        }
-        const { rounds, user, navigation } = this.props;
-        const dataArray = rounds.map((round) => {
-            return { ...round, key: round.id }
-        });
-        return (
-            <View style={styles.dashboardContainer}>
-                <View style={styles.container}>
-                    <UserProfile user={user} />
-                </View>
-                <View style={styles.informationContainer}>
-                    <RoundInformation rounds={rounds} />
-                </View>
-                {/* <Container style={styles.listContainer}> */}
-                    <List
-                    dataArray={dataArray}
-                    renderRow={(item) => {
-                          return (
-                            <ListItem style={styles.listItem}>
-                                <Body style={styles.leftItem}>
-                                    <Text>{item.name}</Text>
-                                    <Text>{helper.formatDate(item.startedAt)}</Text>
-                                </Body>
+                  <Body style={styles.middleItem}>
+                    <Text style={{ color: variables.primary }}>{item.score.toString()}</Text>
 
-                                <Body style={styles.middleItem}>
-                                    <Text style={{ color: variables.primary }}>{item.score.toString()}</Text>
+                  </Body>
 
-                                </Body>
+                  <Right style={styles.rightItem}>
+                    <BaseIcon name="md-arrow-forward"></BaseIcon>
+                  </Right>
+                </ListItem>
+              )
+            }}
+          >
+          </List>
+        </Container>
+      </Container>
 
-                                <Right style={styles.rightItem}>
-                                    <BaseIcon name="md-arrow-forward"></BaseIcon>
-                                </Right>
-                            </ListItem>
-                        )
-                    } }
-                    >
-                        
-                    </List>
-     
-                    <Fab
-                        onPress={
-                            () => navigation.navigate(screens.COURSE_SELECTION_SCREEN)
-                        }
-                        style={styles.fab}
-                    >
-                        <Icon name="golf-course"></Icon>
-                    </Fab>
-            </View>
-
-        )
-    }
+    )
+  }
 }
 
 const styles = StyleSheet.create({
-    dashboardContainer: {
-        flex: 1,
-        flexDirection: "column"
-    },
-    container: {
-        height: 190
-    },
-    informationContainer: {
-        height: 70,
-        borderBottomWidth: 1,
-        borderColor: variables.border
-    },
-    listContainer: {
-        padding: 0,
-        margin: 0,
-        marginBottom: 100
-    },
-    listItem: {
-        marginLeft: 0,
-        marginRight: 0,
-        paddingRight: 0,
-        paddingLeft: 0,
-    },
-    leftItem: {
-        alignItems: 'center',
-    },
-    middleItem: {
-        alignItems: 'center',
-    },
-    rightItem: {
-        position: "absolute",
-        right: 10,
-        alignContent: "center"
-    },
-    fab: {
-        backgroundColor: variables.primary,
-    }
+  dashboardContainer: {
+  },
+  container: {
+    maxHeight: 190
+  },
+  informationContainer: {
+    maxHeight: 70,
+    borderBottomWidth: 1,
+    borderColor: variables.border
+  },
+  listItem: {
+    marginLeft: 0,
+    marginRight: 0,
+    paddingRight: 0,
+    paddingLeft: 0,
+  },
+  leftItem: {
+    alignItems: 'center',
+  },
+  middleItem: {
+    alignItems: 'center',
+  },
+  rightItem: {
+    position: "absolute",
+    right: 10,
+    alignContent: "center"
+  }
 });
 
 
 const mapStateToProps = (state, ownProps) => {
-    return {
-        rounds: state.rounds,
-        user: state.user
-    };
+  return {
+    rounds: state.rounds,
+    user: state.user
+  };
 };
 
 export default connect(mapStateToProps)(DashboardContainer)

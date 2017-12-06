@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import Expo from "expo";
+import { StyleSheet } from "react-native";
 
 import { Container, Header, Input, Item, Button, Content, List, ListItem, Text, Body, Left, Right, Icon, Fab } from 'native-base';
 
@@ -32,15 +33,19 @@ class CourseSelectionContainer extends Component {
   }
 
   render() {
+    if (!this.props.filteredCourses && !this.props.filteredCourses.length) {
+      return <Expo.AppLoading/>
+    }
+    console.log('render selection kissa')
     const { filteredCourses, onFilterCourses, navigation } = this.props;
     return (
-      <View style={styles.dashboardContainer}>
+      <Container style={styles.dashboardContainer}>
 
         <SearchBar onChangeText={(value) => this.props.onFilterCourses(value)} />
 
-        <FlatList
-          data={filteredCourses}
-          renderItem={({ item }) => {
+        <List
+          dataArray={filteredCourses}
+          renderRow={(item ) => {
             const iconStyles = {
               color: item.isFavorite ? '#ffcc33' : '#b3b3b3',
               fontSize: 27,
@@ -62,6 +67,7 @@ class CourseSelectionContainer extends Component {
                     name={item.isFavorite ? icons.star : icons.starOutline}
                     onPress={
                       () => {
+                        console.log('joawd')
                         this.props.onToggleFavorite(item)
                       }
                     }
@@ -78,8 +84,8 @@ class CourseSelectionContainer extends Component {
             )
           }}
         >
-        </FlatList>
-      </View>
+        </List>
+      </Container>
 
     )
   }
