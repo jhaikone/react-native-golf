@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Expo from "expo";
 import { connect } from "react-redux";
 
 import { StyleSheet, View } from "react-native";
@@ -11,8 +10,6 @@ import RoundInformation from "../components/RoundInformation";
 
 import helper from '../../../utils/helpers';
 import variables from "../../../styles/variables.js";
-
-import screens from "../../../screen-names";
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -27,16 +24,13 @@ class DashboardContainer extends Component {
     });
     return (
       <Container>
-        <Container>
-          <Container style={styles.container}>
+        <Content>
+          <View style={styles.container}>
             <UserProfile user={user} />
-          </Container>
-          <Container style={styles.informationContainer}>
+          </View>
+          <View style={styles.informationContainer}>
             <RoundInformation rounds={rounds} />
-          </Container>
-        </Container>
-
-        <Container>
+          </View>
           <List
             dataArray={dataArray}
             renderRow={(item) => {
@@ -60,7 +54,7 @@ class DashboardContainer extends Component {
             }}
           >
           </List>
-        </Container>
+        </Content>
       </Container>
 
     )
@@ -71,10 +65,10 @@ const styles = StyleSheet.create({
   dashboardContainer: {
   },
   container: {
-    maxHeight: 190
+    height: 190
   },
   informationContainer: {
-    maxHeight: 70,
+    height: 70,
     borderBottomWidth: 1,
     borderColor: variables.border
   },

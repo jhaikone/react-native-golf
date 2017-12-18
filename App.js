@@ -78,7 +78,7 @@ class App extends Component {
         <StyleProvider style={getTheme(platform)}>
           <Container style={{ flex: 1 }}>
 
-            <MainContent navigation={navigation} style={{ backgroundColor: "green" }} />
+            <DashboardScreen navigation={navigation} style={{ backgroundColor: "green" }} />
 
             <Footer>
               <Toolbar>

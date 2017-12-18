@@ -55,7 +55,20 @@ function loading (state = false, action) {
       return false;
     }
   }
-}    
+}
+
+function selectCourse (state = {}, action) {
+  switch (action.type) {
+    case types.SELECT_COURSE: {
+      return {
+        ...action.course
+      }
+    }
+    default: {
+      return state;
+    }
+  }
+}
 
 export const actions = {
   fetch: (dispatch) => {
@@ -110,12 +123,21 @@ export const actions = {
       const state = getState();
       AsyncStorage.setItem("COURSES", JSON.stringify(state.courses.courses));
     }
+  },
+  selectCourse: (selectedCourse) => {
+    return (dispatch) => {
+      dispatch({
+        type: types.SELECT_COURSE,
+        course: selectedCourse
+      });
+    }
   }
 }
 
 export default combineReducers({
   filteredCourses,
   loading,
-  courses
+  list: courses,
+  selected: selectCourse
 });
 

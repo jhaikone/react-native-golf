@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 
 import store from "../../store";
 
-import CourseContainer from "./container/CourseContainer";
+import CourseContainer from "./CourseContainer";
 
 import variables from "../../styles/variables";
 
