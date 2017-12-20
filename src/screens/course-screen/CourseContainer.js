@@ -19,7 +19,7 @@ const GameModes = [
 
 const getLabel = (name, value) => {
   if (value === null || value === undefined || value === '') return null;
-  return `${name} - ${Math.round(Number(value) / 100)}`
+  return `${name} / ${Math.round(Number(value) / 100)}`
 }
 
 class CourseContainer extends Component {
@@ -53,13 +53,13 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     tees: [
-      { value: 0, label: getLabel('Musta', selected.black) },
-      { value: 1, label: getLabel('Valkoinen', selected.white) },
-      { value: 2, label: getLabel('Keltainen', selected.yellow) },
-      { value: 3, label: getLabel('Sininen', selected.blue) },
-      { value: 4, label: getLabel('Punainen', selected.red) },
+      { value: "black", label: getLabel('Musta', selected.black) },
+      { value: "white", label: getLabel('Valkoinen', selected.white) },
+      { value: "yellow", label: getLabel('Keltainen', selected.yellow) },
+      { value: "blue", label: getLabel('Sininen', selected.blue) },
+      { value: "red", label: getLabel('Punainen', selected.red) },
     ],
-    selectedTee: selectedTee,
+    selectedTee,
     selectedGameMode
   };
 };

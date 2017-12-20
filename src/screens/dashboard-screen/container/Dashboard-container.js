@@ -16,8 +16,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 class DashboardContainer extends Component {
 
   render() {
-    console.log('rendering dashboard kissa')
-
     const { rounds, user, navigation } = this.props;
     const dataArray = rounds.map((round) => {
       return { ...round, key: round.id }

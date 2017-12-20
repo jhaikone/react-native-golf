@@ -53,7 +53,6 @@ class App extends Component {
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
     });
-    console.log('setting stata');
     this.setState({ isReady: true });
   }
 
@@ -68,7 +67,6 @@ class App extends Component {
   // }
 
   render() {
-    console.log('rennder', this.state)
     if (!this.state.isReady) {
       return <Expo.AppLoading />
     }

@@ -14,8 +14,6 @@ export default class Course extends Component {
   
   
     setTee = (selected) => {
-      console.log('component tee select', selected);
-      console.log('this', this)
       if (this.props.selectedTee.value !== selected) {
         this.props.onSelectTee(selected);
       }
@@ -28,14 +26,13 @@ export default class Course extends Component {
     }
   
     goToSessionScreen = () => {
-      const { onFetchHoles, navigation } = this.props;
+      const { onFetchHoles, navigation, tees, selectedTee} = this.props;
       const course_id = (navigation.state && navigation.state.params) ? navigation.state.params.id : null;
       const holes = onFetchHoles(course_id);
-      navigation.navigate(screens.SESSION_SCREEN);
+      navigation.navigate(screens.SESSION_SCREEN, tees.find(tee => tee.value === selectedTee));
     }
   
     render() {
-      console.log('container course render', this);
       const {gameModes, selectedGameMode, selectedTee, tees} = this.props;
       return (
         <Container>

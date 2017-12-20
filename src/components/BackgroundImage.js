@@ -11,10 +11,10 @@ const Overlay = () => (
 export default class BackgroundImage extends Component {
 
   render() {
-    const { overlay, source } = this.props;
+    const { overlay, source, blurRadius } = this.props;
     return (
       <View style={styles.backgroundContainer}>
-        <Image style={styles.backgroundImage} resizeMode="cover" source={source} />
+        <Image blurRadius={blurRadius ? blurRadius : 1} style={styles.backgroundImage} resizeMode="cover" source={source} />
         {overlay && <Overlay />}
       </View>
     )
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     backgroundColor: "#000",
-    opacity: 0.6,
+    opacity: 0.3,
     position: "absolute",
     top: 0,
     bottom: 0,

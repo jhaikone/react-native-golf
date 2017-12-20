@@ -65,7 +65,6 @@ export default class CourseSelectionContainer extends Component {
                     name={item.isFavorite ? icons.star : icons.starOutline}
                     onPress={
                       () => {
-                        console.log('joawd')
                         this.props.onToggleFavorite(item)
                       }
                     }

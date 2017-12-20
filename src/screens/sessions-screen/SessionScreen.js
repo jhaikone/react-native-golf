@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 
 import store from "../../store";
 
-import SessionContainer from "./container/SessionContainer";
+import SessionContainer from "./SessionContainer";
 
 import variables from "../../styles/variables";
 import screens from "../../screen-names";
@@ -17,7 +17,6 @@ class SessionScreen extends Component {
   static navigationOptions = { header: null };
 
   render() {
-    console.log('prpops session screen', this.props)
     return (
       <Provider store={store}>
         <Container>
