@@ -17,12 +17,12 @@ import Swiper from 'react-native-swiper';
 export default class Session extends Component {
 
   render() {
-    const { holes, course, currentIndex } = this.props;
+    const { holes, course, currentIndex, navigation } = this.props;
     const isLastHole = !!(currentIndex === holes.length - 1);
+    console.log('session props', this.props);
     return (
       <Swiper
         showsPagination={!isLastHole}
-        loadMinimal={true}
         loop={false}
         bounces={true}
         style={{ flex: 1 }}
@@ -39,8 +39,10 @@ export default class Session extends Component {
                 onUpdateScore={this.props.onUpdateScore}
                 content={hole}
               />
-              { isLastHole && 
-                <Button style={styles.button} full>
+              {isLastHole &&
+                <Button style={styles.button} full onPress={() => {
+                  navigation.navigate(screenNames.SESSION_FINISHED_SCREEN);
+                }}>
                   <Text>Näytä tulos</Text>
                 </Button>
               }

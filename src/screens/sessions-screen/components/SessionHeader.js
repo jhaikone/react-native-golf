@@ -5,6 +5,8 @@ import { Text } from "native-base";
 
 import BackGroundImage from "../../../components/BackgroundImage";
 
+import variables from "../../../styles/variables";
+
 const BACKGROUND = require("../../../../assets/img/session/session.jpg");
 
 export default class Header extends Component {
@@ -13,18 +15,17 @@ export default class Header extends Component {
     const { content, name } = this.props;
     return (
       <View style={styles.container}>
-        <BackGroundImage blurRadius={15} overlay source={BACKGROUND} />
+        <BackGroundImage blurRadius={25} overlay source={BACKGROUND} />
         <View style={styles.informationContainer}>
-        <Text style={{color: "#fff"}}>{name}{" - "}{content.tee}</Text>
+        <Text style={styles.courseName}>{name}{" - "}{content.tee}</Text>
        
           <Text style={styles.header}>Väylä {content.order}</Text>
 
           <View style={styles.holeInfromation}>
           <View style={styles.divider}></View>
-            <View style={styles.textContainer}><Text style={styles.text}>HCP {content.hcp}</Text></View>
             <View style={styles.textContainer}><Text style={styles.text}>PAR {content.par}</Text></View>
             <View style={styles.textContainer}><Text style={styles.text}>{content.distance}m</Text></View>
-            
+            <View style={styles.textContainer}><Text style={styles.text}>HCP {content.hcp}</Text></View>
           </View>
         </View>
       </View>
@@ -37,12 +38,25 @@ const styles = StyleSheet.create({
     flex: 2,
     paddingLeft: 12,
     paddingRight: 12,
+    borderBottomWidth: 1,
+    borderColor: "#000"
+
+  },
+  courseName: {
+    color: "#fff",
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 2 },
+    textShadowRadius: 10,
   },
   header: {
     fontSize: 50,
     color: "#fff",
     paddingTop: 5,
-    paddingBottom: 10
+    paddingBottom: 10,
+    fontWeight: "bold",
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 2 },
+    textShadowRadius: 20,
   },
   text: {
     color: "#000",
