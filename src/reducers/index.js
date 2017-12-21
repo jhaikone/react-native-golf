@@ -5,6 +5,7 @@ import courses from '../screens/course-selection-screen/reducers/courses_reducer
 import course from '../screens/course-screen/reducers/course-reducer';
 import session from "../screens/sessions-screen/reducers/session-reducer";
 import sessionFinished from "../screens/session-finished-screen/reducers/session-finished-reducer";
+import scorecard from "../screens/score-card-screen/reducers/score-card-reducer";
 
 export default combineReducers( 
     {
@@ -13,6 +14,6 @@ export default combineReducers(
         courses,
         course,
         session,
-        sessionFinished
+        scorecard
     }
 );

@@ -23,7 +23,7 @@ class RoundInformation extends Component {
         return (
             <View style={styles.grid}>
                 <View style={styles.row}>
-
+        
                     <View style={[styles.col, styles.divider]}>
                         <Information header={"Keskiarvo"} label={average} />
                     </View>
@@ -31,7 +31,7 @@ class RoundInformation extends Component {
                     <View style={styles.col}>
                         <Information header={"Ennätys kierros"} label={record.score} />
                     </View>
-
+                    <View style={styles.divider}></View>
                 </View>
             </View>
         )
@@ -40,8 +40,8 @@ class RoundInformation extends Component {
 
 const styles = StyleSheet.create({
     grid: {
+        position: "relative",
         flex: 1,
-        flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
         zIndex: -1
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     col: {
-        flexDirection: "column",
-        flex: 1
+        marginTop: 8,
+        flex: 1,    
     },
     container: {
         alignItems: "center"

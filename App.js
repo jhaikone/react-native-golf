@@ -21,6 +21,8 @@ import CourseScreen from "./src/screens/course-screen/CourseScreen";
 import SessionScreen from "./src/screens/sessions-screen/SessionScreen";
 import SessionFinishedScreen from "./src/screens/session-finished-screen/SessionFinishedScreen";
 
+import ScoreCardScreen from "./src/screens/score-card-screen/ScoreCardScreen";
+
 import testImage from "./assets/img/dashboard/test.jpg";
 import variables from "./src/styles/variables";
 
@@ -118,6 +120,9 @@ export default GolfApp = StackNavigator({
   },
   SessionFinishedScreen: {
     screen: SessionFinishedScreen
+  },
+  ScoreCardScreen: {
+    screen: ScoreCardScreen
   }
 
 });

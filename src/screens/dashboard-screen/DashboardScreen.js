@@ -14,6 +14,7 @@ import variables from "../../styles/variables.js";
 import MOCK_COURSES from "../../../mocks/courses.json"
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import screenNames from '../../screen-names';
 
 const STORAGE_COURSES = "COURSES";
 
@@ -60,20 +61,22 @@ class DashboardScreen extends Component {
             dataArray={dataArray}
             renderRow={(item) => {
               return (
-                <ListItem style={styles.listItem}>
-                  <Body style={styles.leftItem}>
+                <ListItem 
+                  onPress={() => {
+                    console.log('item cliciked', item);
+                    navigation.navigate(screenNames.SCORE_CARD_SCREEN, item);
+                  }} 
+                  style={styles.listItem}>
+                  <View style={styles.leftItem}>
                     <Text>{item.name}</Text>
                     <Text>{helper.formatDate(item.startedAt)}</Text>
-                  </Body>
-
-                  <Body style={styles.middleItem}>
-                    <Text style={{ color: variables.primary }}>{item.score.toString()}</Text>
-
-                  </Body>
-
-                  <Right style={styles.rightItem}>
+                  </View>
+                    <View style={styles.middleItem}>
+                      <Text style={{ color: variables.primary }}>{item.score.toString()}</Text>
+                    </View>
+                   <Right style={styles.rightItem}>
                     <BaseIcon name="md-arrow-forward"></BaseIcon>
-                  </Right>
+                  </Right> 
                 </ListItem>
               )
             }}
@@ -97,21 +100,25 @@ const styles = StyleSheet.create({
     borderColor: variables.border
   },
   listItem: {
+    flex: 1,
     marginLeft: 0,
     marginRight: 0,
     paddingRight: 0,
     paddingLeft: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
+    justifyContent: "center",
   },
   leftItem: {
-    alignItems: 'center',
+    flex: 1,
+    marginRight: 12 //TODO: figure out why this is needed
   },
   middleItem: {
-    alignItems: 'center',
+    flex: 1
   },
   rightItem: {
     position: "absolute",
-    right: 10,
-    alignContent: "center"
+    right: 10
   }
 });
 

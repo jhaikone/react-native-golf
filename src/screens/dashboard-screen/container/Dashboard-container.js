@@ -39,8 +39,10 @@ class DashboardContainer extends Component {
                     <Text>{helper.formatDate(item.startedAt)}</Text>
                   </Body>
 
-                  <Body style={styles.middleItem}>
-                    <Text style={{ color: variables.primary }}>{item.score.toString()}</Text>
+                  <Body>
+                    <View style={styles.middleItem}>
+                      <Text style={{ color: variables.primary }}>{item.score.toString()}m</Text>
+                    </View>
 
                   </Body>
 
@@ -81,6 +83,7 @@ const styles = StyleSheet.create({
   },
   middleItem: {
     alignItems: 'center',
+    backgroundColor: "red"
   },
   rightItem: {
     position: "absolute",
