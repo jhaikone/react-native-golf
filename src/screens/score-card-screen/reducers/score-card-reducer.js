@@ -22,10 +22,11 @@ const scorecard = (state = [], action) => {
 
 export const actions = {
   getScorecard: (item) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+      const results = getState().session.result;
       dispatch({
         type: types.GET_SCORE_CARD_SUCCESS,
-        data: MOCK_SCORECARD
+        data: results && results.length ? results : MOCK_SCORECARD
       })
     }
   }

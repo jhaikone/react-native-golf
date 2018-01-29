@@ -7,20 +7,19 @@ const types = {
   GET_HOLES_REQUEST: "GET_HOLES_REQUEST",
   SELECT_TEE: "SELECT_TEE",
   SELECT_GAMEMODE: "SELECT_GAMEMODE",
-
 }
 
 const holes = (state = [], action) => {
   switch (action.type) {
     case types.GET_HOLES_RECEIVE: {
-      return Object.assign([], state, action.holes);
+      return MOCK_HOLES.filter(hole => Number(hole.course_id) === Number(action.id));
     } default: {
       return state;
     }
   }
 }
 
-const selectTee = (state = 0, action) => {
+const selectTee = (state = "yellow", action) => {
   switch (action.type) {
     case types.SELECT_TEE: {
       return action.selected
@@ -58,7 +57,7 @@ export const actions = {
     return (dispatch) => {
       return dispatch({
         type: types.GET_HOLES_RECEIVE,
-        holes: MOCK_HOLES.data
+        id: id
       });
     }
   },

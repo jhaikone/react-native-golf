@@ -23,11 +23,11 @@ function courses(state = [], action) {
 function filteredCourses (state = [], action) {
   switch (action.type) {
     case types.FILTER_COURSES: {
-      const filtered = action.originalCourses.filter((course) => course.name.toLowerCase().indexOf(action.filterBy) > -1) || [];
+      const filtered = action.originalCourses.filter((course) => course.name.toLowerCase().indexOf(action.filterBy.toLowerCase()) > -1) || [];
       return Object.assign([], filtered);
     }
     case types.ORDER_BY_FAVORITE: {
-      const filtered = action.originalCourses.filter((course) => course.name.toLowerCase().indexOf(action.filterBy) > -1) || [];
+      const filtered = (action.originalCourses || []).filter((course) => course.name.toLowerCase().indexOf(action.filterBy.toLowerCase()) > -1) || [];
       const favorites = filtered.filter((course) => course.isFavorite);
       const regulars = filtered.filter((course) => !course.isFavorite);
       return Object.assign([], favorites.concat(regulars));
@@ -96,7 +96,7 @@ export const actions = {
       return dispatch({
         type: types.FILTER_COURSES,
         filterBy: value,
-        originalCourses: state.courses.courses
+        originalCourses: state.courses.list
       });
     }
   },
@@ -121,7 +121,7 @@ export const actions = {
   saveCourses: () => {
     return (dispatch, getState) => {
       const state = getState();
-      AsyncStorage.setItem("COURSES", JSON.stringify(state.courses.courses));
+      AsyncStorage.setItem("COURSES", JSON.stringify(state.courses.list));
     }
   },
   selectCourse: (selectedCourse) => {

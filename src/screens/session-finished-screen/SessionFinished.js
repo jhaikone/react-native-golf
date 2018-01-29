@@ -8,12 +8,21 @@ import Toolbar from "../../components/Toolbar";
 
 import variables from '../../styles/variables';
 
+import screenNames from "../../screen-names/";
+
+import { NavigationActions } from 'react-navigation';
+
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: screenNames.DASHBOARD_SCREEN})
+  ]
+})
+
 export default class SessionFinished extends Component {
 
   render() {
-    console.log('session finished components props', this.props);
-
-    const { score, putts, front, back } = this.props;;
+    const { score, putts, front, back, navigation, course, onEndSession } = this.props;
     return (
       <Container>
         <Content>
@@ -34,7 +43,7 @@ export default class SessionFinished extends Component {
             </View>
           </Card>
           <View style={{flex: 1, justifyContent: "center", flexDirection:"row", marginTop: 20}}>
-          <Button bordered onPress={() => console.log('go to tuloskortti')}>
+          <Button bordered onPress={() => navigation.navigate(screenNames.SCORE_CARD_SCREEN, course)}>
             <Text>Tuloskortti</Text>
           </Button>
           </View>
@@ -42,7 +51,10 @@ export default class SessionFinished extends Component {
 
         <Footer>
           <Toolbar>
-            <Button style={{backgroundColor: variables.primary}} onPress={() => console.log('end round')} >
+            <Button style={{backgroundColor: variables.primary}} onPress={() => {
+              onEndSession();
+              navigation.dispatch(resetAction);
+            }} >
               <Text>tallenna ja lopeta</Text>
             </Button>
           </Toolbar>

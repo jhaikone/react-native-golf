@@ -12,17 +12,17 @@ const BACKGROUND = require("../../../../assets/img/session/session.jpg");
 export default class Header extends Component {
 
   render() {
-    const { content, name } = this.props;
+    const { content } = this.props;
     return (
       <View style={styles.container}>
-        <BackGroundImage blurRadius={25} overlay source={BACKGROUND} />
+        {/* <BackGroundImage blurRadius={25} overlay source={BACKGROUND} /> */}
         <View style={styles.informationContainer}>
-        <Text style={styles.courseName}>{name}{" - "}{content.tee}</Text>
+        <Text style={styles.courseName}>{content.tee}</Text>
        
           <Text style={styles.header}>Väylä {content.order}</Text>
 
           <View style={styles.holeInfromation}>
-          <View style={styles.divider}></View>
+          {/* <View style={styles.divider}></View> */}
             <View style={styles.textContainer}><Text style={styles.text}>PAR {content.par}</Text></View>
             <View style={styles.textContainer}><Text style={styles.text}>{content.distance}m</Text></View>
             <View style={styles.textContainer}><Text style={styles.text}>HCP {content.hcp}</Text></View>
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     flex: 2,
     paddingLeft: 12,
     paddingRight: 12,
+    backgroundColor: variables.primary,
     borderBottomWidth: 1,
     borderColor: "#000"
 
@@ -49,17 +50,18 @@ const styles = StyleSheet.create({
     textShadowRadius: 10,
   },
   header: {
-    fontSize: 50,
+    fontSize: 40,
     color: "#fff",
     paddingTop: 5,
-    paddingBottom: 10,
     fontWeight: "bold",
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 2 },
     textShadowRadius: 20,
   },
   text: {
-    color: "#000",
+    color: "#fff",
+    textShadowOffset: { width: 1, height: 2 },
+    textShadowRadius: 10,
   },
   divider: {
     position: "absolute",
@@ -71,10 +73,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   textContainer: {
-    backgroundColor: "#fff",
-    borderColor: "#000",
-    borderWidth: 1,
-    borderRadius: 5,
+    // backgroundColor: "#fff",
+    // borderColor: "#000",
+    // borderWidth: 1,
+    // borderRadius: 1,
     width: 60,
     height: 60,
     alignItems: "center",

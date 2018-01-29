@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Expo from "expo";
 import { View, Image, StyleSheet } from "react-native";
 
@@ -14,12 +14,11 @@ import variables from '../../styles/variables';
 
 import Swiper from 'react-native-swiper';
 
-export default class Session extends Component {
+export default class Session extends PureComponent {
 
   render() {
-    const { holes, course, currentIndex, navigation } = this.props;
+    const { holes, currentIndex, navigation } = this.props;
     const isLastHole = !!(currentIndex === holes.length - 1);
-    console.log('session props', this.props);
     return (
       <Swiper
         showsPagination={!isLastHole}
@@ -34,7 +33,7 @@ export default class Session extends Component {
         {holes.map((hole) => {
           return (
             <View key={hole.order} style={{ flex: 1 }}>
-              <SessionHeader name={course.name} content={hole} />
+              <SessionHeader content={hole} />
               <SessionContent
                 onUpdateScore={this.props.onUpdateScore}
                 content={hole}
@@ -43,7 +42,7 @@ export default class Session extends Component {
                 <Button style={styles.button} full onPress={() => {
                   navigation.navigate(screenNames.SESSION_FINISHED_SCREEN);
                 }}>
-                  <Text>Näytä tulos</Text>
+                  <Text>Näytä yhteenveto kierroksesta</Text>
                 </Button>
               }
             </View>

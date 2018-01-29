@@ -3,6 +3,7 @@ import Expo from "expo";
 import { connect } from "react-redux";
 
 import {actions as sessionActions} from "./reducers/session-reducer";
+import variables from "../../styles/variables";
 
 import Session from "./Session";
 
@@ -26,7 +27,7 @@ const mapStateToProps = (state, ownProps) => {
       score: hole.par,
       putts: 2,
       distance: hole[state.course.selectedTee],
-      tee: navigation && navigation.state && navigation.state.params && navigation.state.params.label,
+      tee: navigation && navigation.state && navigation.state.params && navigation.state.params.tee.label,
     };
   })
 

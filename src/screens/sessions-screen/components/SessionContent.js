@@ -13,7 +13,8 @@ export default class SessionContent extends Component {
     this.state = {
       score: this.props.content.par,
       putts: this.props.content.putts,
-      order: this.props.content.order
+      order: this.props.content.order,
+      par: this.props.content.par
     }
   }
 
@@ -95,7 +96,7 @@ export default class SessionContent extends Component {
 
 const styles = StyleSheet.create({
   informationContainer: {
-    flex: 2,
+    flex: 3,
     justifyContent: "center",
     marginBottom: 50,
     marginTop: 10,

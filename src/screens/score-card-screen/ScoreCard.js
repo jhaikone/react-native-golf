@@ -1,29 +1,25 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
 import { Container, Content, Text, Card, CardItem, Button } from 'native-base';
 
+import RoundScore from "../../components/RoundScore";
+
 import variables from '../../styles/variables';
 
-const InformationRow = ({ label, value }) => {
-  return (
-    <View style={{ flex: 1, flexDirection: "row", padding: 8 }}>
-      <View style={{ flex: 1 }}>
-        <Text>{label}</Text>
-      </View>
+import BackgroundImage from "../../components/BackgroundImage";
 
-      <View style={{ flex: 1, alignItems: "flex-end" }}>
-        <Text>{value}</Text>
-      </View>
-    </View>
-  )
-}
+const BACKGROUND_IMAGE = require("../../../assets/img/login/signup.jpg")
+
 
 const TableCard = ({ title, content, par, score }) => {
   return (
-    <Card style={{ flex: 2, padding: 4 }}>
-      <CardItem header style={{ paddingLeft: 4 }}>
-        <Text>{title} {score - par >= 0 ? "+" : ""}{score - par}</Text>
+    <Card>
+      <CardItem header style={{paddingLeft: 8, paddingRight: 6}}>
+        <View style={{flex:1, flexDirection: "row", justifyContent: "space-between"}}>
+          <Text>{title} </Text>
+          <Text>{score - par >= 0 ? "+" : ""}{score - par}</Text>
+        </View>
       </CardItem>
 
       <View style={[styles.scoreCard, styles.header]}>
@@ -49,15 +45,20 @@ const TableCard = ({ title, content, par, score }) => {
       </View>
 
       <View style={[styles.scoreCard, styles.score]}>
-        <View style={styles.firstCol}><Text>Tulos</Text></View>
-        <View style={styles.tableContent}>
-          {content.map(hole => (
-            <Text key={hole.order}>{hole.score}</Text>
-          ))
+        <View style={[styles.firstCol, { paddingTop: 6, paddingBottom: 6 }]}><Text>Tulos</Text></View>
+        <View style={[styles.tableContent, { alignItems: "center" }]}>
+          {content.map(hole => {
+            const backgroundColor = hole.score > hole.par ? "255,0,0" : hole.score < hole.par ? "0,0,255 " : "0,0,0";
+            const opacity = Math.abs(hole.score - hole.par) > 2 ? 1 : Math.abs(hole.score - hole.par) > 1 ? 0.5 :
+              Math.abs(hole.score - hole.par) > 0 ? 0.2 : 0;
+            return (<View key={hole.order} style={{ padding: 5, backgroundColor: `rgba(${backgroundColor}, ${opacity})` }}>
+              <Text>{hole.score}</Text>
+            </View>)
+          })
           }
         </View>
         <View style={styles.tableInfoContainer}>
-          <Text style={styles.tableInfo}>{score}</Text>
+          <Text style={[styles.tableInfo, { paddingTop: 6, paddingBottom: 6 }]}>{score}</Text>
         </View>
       </View>
     </Card>
@@ -66,25 +67,33 @@ const TableCard = ({ title, content, par, score }) => {
 
 export default class ScoreCard extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { highlightedIndex: 0 };
+  }
+
+
   componentDidMount() {
     this.props.onGetScorecard(this.props.item);
   }
 
   render() {
-    console.log('session finished components props', this.props)
-    const { front, back, item, frontPar, backPar, frontScore, backScore } = this.props;
+    const { front, back, frontPar, backPar, frontScore, backScore } = this.props;
+    const score = ( (frontScore || 0) + (backScore || 0) ) - (frontPar+backPar);
+
     return (
       <Content style={{ flex: 1 }}>
-        <TableCard title="Etuysi" content={front} par={frontPar} score={frontScore} />
-        <TableCard title="Takaysi" content={back} par={backPar} score={backScore} />
         <Card>
-          <CardItem header style={{ paddingLeft: 8 }}>
-            <Text>Yhteenveto</Text>
-          </CardItem>
-          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text style={{ color: variables.primary, fontSize: 90 }}>{item.score}</Text>
-          </View>
+          <BackgroundImage source={BACKGROUND_IMAGE} overlay blurRadius={5}/>
+          <RoundScore frontScore={frontScore} backScore={backScore} score={score} />
         </Card>
+
+        {frontScore > 0 &&
+          <TableCard title="Etuysi" content={front} par={frontPar} score={frontScore}/>
+        }
+        {backScore > 0 &&
+          <TableCard title="Takaysi" content={back} par={backPar} score={backScore}/>
+        }
       </Content>
     )
   }

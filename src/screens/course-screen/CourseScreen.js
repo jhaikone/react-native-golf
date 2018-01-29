@@ -17,7 +17,7 @@ class CourseScreen extends Component {
     headerStyle: {
       backgroundColor: `${variables.headerBackground}`,
     },
-    headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
+    headerTitleStyle: { marginRight: 70, alignSelf: 'center' },
     headerTintColor: `${variables.primary}`
   });
 

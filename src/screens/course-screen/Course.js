@@ -29,7 +29,8 @@ export default class Course extends Component {
       const { onFetchHoles, navigation, tees, selectedTee} = this.props;
       const course_id = (navigation.state && navigation.state.params) ? navigation.state.params.id : null;
       const holes = onFetchHoles(course_id);
-      navigation.navigate(screens.SESSION_SCREEN, tees.find(tee => tee.value === selectedTee));
+      navigation.navigate(
+        screens.SESSION_SCREEN, {name: navigation.state.params.name, tee: tees.find(tee => tee.value === selectedTee)});
     }
   
     render() {

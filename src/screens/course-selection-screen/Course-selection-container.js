@@ -15,9 +15,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetch: () => {
-      dispatch(courseSelectionActions.fetch())
-    },
     onFilterCourses: (value) => {
       dispatch(courseSelectionActions.filterCourses(value))
     },

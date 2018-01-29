@@ -170,7 +170,7 @@ export default {
   get statusBarColor() {
     return color(this.toolbarDefaultBg)
       .darken(0.2)
-      .hexString();
+      .hex();
   },
 
   // Icon
@@ -240,7 +240,7 @@ export default {
   get radioSelectedColor() {
     return color(this.radioColor)
       .darken(0.2)
-      .hexString();
+      .hex();
   },
 
   // Spinner
@@ -274,7 +274,7 @@ export default {
   get darkenHeader() {
     return color(this.tabBgColor)
       .darken(0.03)
-      .hexString();
+      .hex();
   },
 
   dropdownBg: "#000",

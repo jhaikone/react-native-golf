@@ -5,4 +5,5 @@ export default {
     SESSION_SCREEN: "SessionScreen",
     SESSION_FINISHED_SCREEN: "SessionFinishedScreen",
     SCORE_CARD_SCREEN: "ScoreCardScreen",
+    SIGN_IN_SCREEN: "SignInScreen"
 };

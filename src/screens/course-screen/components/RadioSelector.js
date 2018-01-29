@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
-import { Container, Card, CardItem, Body, Content, ListItem, Text, Radio, Right, StyleProvider } from 'native-base';
+import { Container, Card, CardItem, Body, Content, Text, Radio, Right, StyleProvider } from 'native-base';
+
+import ListItem from "../../../components/ListItem";
 
 import getTheme from '../../../../native-base-theme/components';
 import platform from '../../../../native-base-theme/variables/platform';
@@ -29,7 +31,7 @@ export default class RadioSelector extends Component {
           <Content>
             {options.map((tee) => {
               return (
-                <ListItem key={tee.value} style={styles.listItem} onPress={() => onSelect(tee.value)} >
+                <ListItem key={tee.value} onPress={() => onSelect(tee.value)} >
                   <Text style={{ color: tee.value === selectedItem ? variables.primary : "#000" }}>{tee.label}</Text>
                   <Right style={styles.rightItem}>
                     <Radio style={styles.radio} onPress={() => onSelect(tee.value)} selected={tee.value === selectedItem} />
@@ -47,8 +49,6 @@ export default class RadioSelector extends Component {
 
 
 const styles = StyleSheet.create({
-  listItem: {
-  },
   rightItem: {
     flex: 1,
     alignItems: "flex-end"

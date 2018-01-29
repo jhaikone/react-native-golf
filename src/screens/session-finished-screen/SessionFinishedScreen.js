@@ -9,7 +9,7 @@ import variables from "../../styles/variables";
 class SessionFinishedScreen extends Component {
 
   static navigationOptions = {
-    headerTitle: "Kierrostulokset",
+    headerTitle: "Yhteenveto",
     headerStyle: {
       backgroundColor: `${variables.headerBackground}`,
     },

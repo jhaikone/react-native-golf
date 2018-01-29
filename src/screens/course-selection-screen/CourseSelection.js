@@ -2,13 +2,17 @@
 
 import React, { Component } from "react";
 import Expo from "expo";
-import { StyleSheet } from "react-native";
+import { StyleSheet, FlatList, ScrollView } from "react-native";
 
 import screenNames from './../../screen-names';
 import variables from './../../styles/variables';
 import icons from './../../styles/icons';
 
-import { Container, Header, Input, Item, Button, Content, List, ListItem, Text, Body, Left, Right, Icon, Fab } from 'native-base';
+import ListItem from "../../components/ListItem";
+
+import _ from "lodash";
+
+import { Container, Header, Input, Item, Button, Content, List, Text, Body, Left, Right, Icon, Fab } from 'native-base';
 
 const SearchBar = ({ onChangeText, }) => {
   return (
@@ -26,8 +30,9 @@ const SearchBar = ({ onChangeText, }) => {
 
 export default class CourseSelectionContainer extends Component {
 
-  componentDidMount() {
-    this.props.onFetch();
+  constructor (props) {
+    super(props);
+    this.delayedSearch = _.debounce(this.props.onFilterCourses, 300)
   }
 
   render() {
@@ -38,11 +43,13 @@ export default class CourseSelectionContainer extends Component {
     return (
       <Container style={styles.dashboardContainer}>
 
-        <SearchBar onChangeText={(value) => this.props.onFilterCourses(value)} />
+        <SearchBar onChangeText={(value) => this.delayedSearch(value)} />
+      <ScrollView>
+        <FlatList
+          data={filteredCourses}
+          initialNumToRender={10}
 
-        <List
-          dataArray={filteredCourses}
-          renderRow={(item) => {
+          renderItem={({item}) => {
             const iconStyles = {
               color: item.isFavorite ? '#ffcc33' : '#b3b3b3',
               fontSize: 27,
@@ -51,12 +58,15 @@ export default class CourseSelectionContainer extends Component {
             };
             return (
               <ListItem
-                style={styles.listItem}
                 onPress={() => {
                   this.props.onSelectCourse(item);
                   navigation.navigate(screenNames.COURSE_SCREEN, item);
                 }}
-
+                onLongPress={
+                  () => {
+                    this.props.onToggleFavorite(item)
+                  }
+                }
               >
                 <Left style={styles.leftItem}>
                   <Icon style={iconStyles}
@@ -81,7 +91,8 @@ export default class CourseSelectionContainer extends Component {
             )
           }}
         >
-        </List>
+        </FlatList>
+        </ScrollView>
       </Container>
     )
   }
@@ -97,12 +108,6 @@ const styles = StyleSheet.create({
   },
   middleItem: {
     flex: 4
-  },
-  listItem: {
-    marginLeft: 0,
-    marginRight: 0,
-    paddingRight: 0,
-    paddingLeft: 0,
   },
   rightItem: {
     position: "absolute",

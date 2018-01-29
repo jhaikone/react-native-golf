@@ -17,6 +17,7 @@ import Toolbar from "./src/components/Toolbar";
 import screens from "./src/screen-names";
 import CourseSelectionScreen from "./src/screens/course-selection-screen/CourseSelectionScreen";
 import DashboardScreen from "./src/screens/dashboard-screen/DashboardScreen";
+import LoginScreen from "./src/screens/login-screen/LoginScreen";
 import CourseScreen from "./src/screens/course-screen/CourseScreen";
 import SessionScreen from "./src/screens/sessions-screen/SessionScreen";
 import SessionFinishedScreen from "./src/screens/session-finished-screen/SessionFinishedScreen";
@@ -30,6 +31,7 @@ import getTheme from "./native-base-theme/components";
 import platform from './native-base-theme/variables/platform';
 
 import MOCK_COURSES from "./mocks/courses.json";
+import SignInScreen from "./src/screens/sign-in-screen/SignInScreen";
 
 
 const cacheImages = images => {
@@ -78,15 +80,7 @@ class App extends Component {
       <Provider store={store}>
         <StyleProvider style={getTheme(platform)}>
           <Container style={{ flex: 1 }}>
-
-            <DashboardScreen navigation={navigation} style={{ backgroundColor: "green" }} />
-
-            <Footer>
-              <Toolbar>
-                <Button onPress={() => {navigation.navigate(screens.COURSE_SELECTION_SCREEN) }}><Text>Aloita kierros</Text>
-                </Button>
-              </Toolbar>
-            </Footer>
+            <DashboardScreen navigation={navigation} />
           </Container>
         </StyleProvider>
       </Provider>
@@ -97,20 +91,28 @@ class App extends Component {
 export default GolfApp = StackNavigator({
   Home: {
     screen: App,
-    navigationOptions: {
-      headerTitle: "Tervetuloa",
-      headerStyle: {
-        backgroundColor: `${variables.headerBackground}`,
-      },
-      headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
-      headerTintColor: `${variables.primary}`
-    }
+  //   navigationOptions: {
+  //     headerTitle: "Tervetuloa",
+  //     headerStyle: {
+  //       backgroundColor: `${variables.headerBackground}`,
+  //     },
+  //     headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
+  //     headerTintColor: `${variables.primary}`
+  //   }
+  navigationOptions: { header: null }
   },
+
   CourseSelectionScreen: {
     screen: CourseSelectionScreen
   },
   CourseScreen: {
     screen: CourseScreen
+  },
+  LoginScreen: {
+    screen: LoginScreen
+  },
+  SignInScreen: {
+    screen: SignInScreen
   },
   DashboardScreen: {
     screen: DashboardScreen,

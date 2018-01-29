@@ -4,7 +4,8 @@ import { combineReducers } from 'redux';
 const types = {
   INDEX_CHANGE: "INDEX_CHANGE",
   UPDATE_SCORE: "UPDATE_SCORE",
-  INIT_SCORES: "INIT_SCORES"
+  INIT_SCORES: "INIT_SCORES",
+  CLEAR_SESSION: "CLEAR_SESSION"
 };
 
 const currentIndex = (state = 0, action = {}) => {
@@ -32,6 +33,9 @@ const result = (state = [], action) => {
       });
       return array;
     };
+    case types.CLEAR_SESSION: {
+      return [];
+    }
     default: {
       return state;
     };
@@ -44,6 +48,17 @@ export const actions = {
       dispatch({
         type: types.INDEX_CHANGE,
         index: newIndex
+      })
+    }
+  },
+  clearSession: () => {
+    return (dispatch) => {
+      dispatch({
+        type: types.CLEAR_SESSION
+      });
+      dispatch({
+        type: types.INDEX_CHANGE,
+        index: 0
       })
     }
   },
